@@ -22,6 +22,6 @@ def animate(i):
     ax.grid(True)
 
 ani = animation.FuncAnimation(fig, animate, frames = 255, interval = 50)
-ani.save('C:/Users/User/Desktop/anim.gif',
+ani.save('C:/Users/User/Desktop/Numpy3.gif',
          writer='pillow',
          fps = 30)
