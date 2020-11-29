@@ -1,0 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+
+with open("C:/Users/User/Desktop/start.txt") as f:
+    y = np.array([float(s) for s in f])
+A = np.eye(len(y)) - np.roll(np.eye(len(y)), -1, axis = 1)
+fig, ax = plt.subplots()
+ax.plot(y)
+minX = 0
+minY = 0
+maxX = len(y)
+maxY = max(y)
+
+def animate(i):
+    global y
+    y = y - 0.5 * np.dot(A, y)
+    ax.clear()
+    ax.plot(y)
+    ax.set_ylim(minY, maxY)
+    ax.set_xlim(minX, maxX)
+    ax.grid(True)
+
+ani = animation.FuncAnimation(fig, animate, frames = 255, interval = 50)
+ani.save('C:/Users/User/Desktop/anim.gif',
+         writer='pillow',
+         fps = 30)
