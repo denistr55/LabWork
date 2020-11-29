@@ -1,0 +1,23 @@
+import pandas as pd
+import html5lib
+import matplotlib.pyplot as plt
+
+rating = pd.concat(pd.read_html("C:/Users/User/Desktop/students/results_ejudge.html"))
+table = pd.read_excel("C:/Users/User/Desktop/students/students_info.xlsx")
+resTable = pd.merge(rating.rename(columns = {'User': 'login'}), table, on = 'login')
+
+print("Факультетские группы, в которых есть люди, решившие H и G на >10 баллов:")
+print(list(resTable[(resTable['G'] > 10) | (resTable['H'] > 10)].groupby("group_faculty").mean().index))
+print("Группы по информатике, в которых есть люди, решившие H и G на >10 баллов:")
+print(list(resTable[(resTable['G'] > 10) | (resTable['H'] > 10)].groupby("group_out").mean().index))
+
+plt.figure(figsize = (10, 5))
+plt.subplot(121)
+plt.xlabel("Group_faculty")
+plt.ylim(0, 8)
+plt.bar(resTable.groupby("group_faculty").mean().index, resTable.groupby("group_faculty").mean().loc[ : , "Solved"])
+plt.subplot(122)
+plt.xlabel("Group_out")
+plt.ylim(0, 8)
+plt.bar(resTable.groupby("group_out").mean().index, resTable.groupby("group_out").mean().loc[ : , "Solved"])
+plt.savefig("C:/Users/User/Desktop/Lr3.png")
