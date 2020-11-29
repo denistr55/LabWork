@@ -1,0 +1,11 @@
+import pandas as pd
+
+df = pd.read_csv("C:/Users/User/Desktop/transactions.csv", delimiter = ',', index_col = 0)
+pd.to_numeric(df['SUM'])
+
+print("3 самых крупных платежа:")
+print(df.loc[df['STATUS'] == 'OK'].sort_values(by = 'SUM', ascending= False).iloc[0:3])
+print("=========================================")
+
+print("Полная сумма реально проведённых платежей в адрес Umbrella, Inc. :")
+print(df.loc[(df['STATUS'] == 'OK') & (df['CONTRACTOR'] == 'Umbrella, Inc'), 'SUM'].sum())
