@@ -1,0 +1,23 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv("C:/Users/User/Desktop/flights.csv", delimiter = ',').groupby('CARGO').agg({"Unnamed: 0": "count", "PRICE":"sum", "WEIGHT":"sum"})
+df.rename(columns = {"Unnamed: 0" : "Number of flights", "PRICE" : "Total price", "WEIGHT" : "Total Weight"}, inplace = True)
+
+plt.figure(figsize = (10, 5))
+plt.subplot(131)
+plt.xlabel("CARGO")
+plt.title("Number of flights")
+plt.bar(df.index, df['Number of flights'])
+plt.subplot(132)
+plt.xlabel("CARGO")
+plt.title("Total price")
+plt.bar(df.index, df['Total price'])
+plt.subplot(133)
+plt.xlabel("CARGO")
+plt.title("Total Weight")
+plt.bar(df.index, df['Total Weight'])
+
+plt.subplots_adjust(top=0.92, bottom=0.12, left=0.10, right=0.95, hspace=0.25, wspace=0.35)
+
+plt.savefig("C:/Users/User/Desktop/Lr2.png")
